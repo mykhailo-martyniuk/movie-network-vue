@@ -1,0 +1,9 @@
+export const SET_MOVIES = 'setMovies';
+export const SET_PAGE = 'setPage';
+export const SET_TOTAL_PAGES = 'setTotalPages';
+export const SET_IS_SEARCH = 'setIsSearch';
+export const SET_SEARCH_QUERY = 'setSearchQuery';
+export const ADD_TO_FAVORITES_HANDLER = 'addToFavoritesHandler';
+export const SET_FAVORITES_FROM_LS = 'setFavoritesFromLS';
+export const SET_GENRES = 'setGenres';
+//export const REMOVE_FROM_FAVORITES = 'removeFromFavorites'
