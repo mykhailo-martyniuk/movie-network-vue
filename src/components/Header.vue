@@ -1,14 +1,22 @@
 <template>
   <header>
     <div class="container header-container">
-      <h1>Movie Network</h1>
+      <router-link to="/">
+        <h1>Movie Network</h1>
+      </router-link>
       <nav>
         <ul>
           <li>
-            <router-link to="/">Home</router-link>
+            <router-link to="/" :class="{ active: activePage === '/' }"
+              >Home</router-link
+            >
           </li>
           <li>
-            <router-link to="/movie/favorites">Favorites</router-link>
+            <router-link
+              to="/movie/favorites"
+              :class="{ active: activePage === '/movie/favorites' }"
+              >Favorites</router-link
+            >
           </li>
         </ul>
       </nav>
@@ -24,8 +32,8 @@
 </template>
 
 <script>
-import { SET_SEARCH_MOVIES_ACTION } from '../store/actions';
-import { getPopularMovies, removeSpaces } from '../helpers';
+import { SET_MOVIES_ACTION, SET_SEARCH_MOVIES_ACTION } from '../consts/actions';
+import { removeSpaces } from '../helpers';
 
 export default {
   name: 'Header',
@@ -34,14 +42,22 @@ export default {
       search: '',
     };
   },
+  computed: {
+    activePage() {
+      return this.$route.path;
+    },
+  },
   methods: {
     onChangeSearch() {
+      if (this.$route.path !== '/') {
+        this.$router.push({ path: '/' });
+      }
       this.$store.dispatch(SET_SEARCH_MOVIES_ACTION, {
         searchQuery: this.search,
       });
     },
     setPopular() {
-      getPopularMovies(this);
+      this.$store.dispatch(SET_MOVIES_ACTION);
     },
   },
   watch: {
@@ -50,7 +66,6 @@ export default {
       const newOldSearch = removeSpaces(oldSearch);
 
       if (newSearchClear.length > 0 && newSearchClear !== newOldSearch) {
-        console.log('search', this.search);
         this.onChangeSearch();
       } else if (newSearchClear.length === 0) {
         this.setPopular();
@@ -85,8 +100,7 @@ div {
   align-items: center;
   height: 100%;
 }
-a,
-a:visited {
+a {
   text-decoration: none;
   color: inherit;
 }
@@ -131,5 +145,9 @@ input {
 input:hover,
 input:focus {
   opacity: 0.6;
+}
+
+.active {
+  color: var(--orange);
 }
 </style>

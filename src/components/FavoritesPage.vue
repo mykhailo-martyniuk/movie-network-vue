@@ -1,12 +1,15 @@
 <template>
-  <h2>Favorites page</h2>
-  <router-link
-    v-for="movie in favorites"
-    :to="{ name: 'Movie', params: { movieId: movie.id } }"
-  >
-    <MovieCard :imgSrc="movie.poster_path" :title="movie.title" :id="movie.id">
+  <h2>Favorites</h2>
+  <div class="movie-container">
+    <MovieCard
+      v-for="movie in favorites"
+      class="card"
+      :imgSrc="movie.poster_path"
+      :title="movie.title"
+      :id="movie.id"
+    >
     </MovieCard>
-  </router-link>
+  </div>
 </template>
 
 <script>
@@ -24,4 +27,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+h2 {
+  margin-top: 100px;
+  margin-bottom: 80px;
+  font-size: 32px;
+}
+</style>

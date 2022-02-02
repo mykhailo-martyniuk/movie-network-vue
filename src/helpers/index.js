@@ -1,8 +1,4 @@
-// const handlerClickOnNumber = (page) => {
-//   if (page >= 1 && page <= pageCount) dispatch(setCurrentPage(page));
-// };
 
-import { SET_MOVIES_ACTION } from '../store/actions';
 
 const checkPaginationCondition = (i, currentPage, endPage) => {
   if (
@@ -36,21 +32,16 @@ export const paginationArray = (currentPage, totalPages) => {
 
 export const removeSpaces = (str) => str.replace(/\s+/g, ' ').trim();
 
-export const conditionForIncrement = (context, value) => {
+export const conditionForIncrement = ({currentPage,totalPages}, value) => {
   if (value > 0)
     return (
-      context.$store.state.currentPage + value <=
-      context.$store.state.totalPages
+      currentPage + value <=
+      totalPages
     );
-  else if (value < 0) return context.$store.state.currentPage + value >= 1;
-};
-
-export const getPopularMovies = (context) => {
-  context.$store.dispatch(SET_MOVIES_ACTION);
+  else if (value < 0) return currentPage + value >= 1;
 };
 
 export const isPropertyOfObjectInArray = (property, value, arr) => {
-  console.log(arr.some((e) => e[property] === value));
   return arr.some((e) => e[property] === value);
 };
 
@@ -63,8 +54,8 @@ export const LS = (property, value) => {
   localStorage[property] = JSON.stringify(value);
 };
 
-export const getGenres = (context, movie) => {
+export const getGenres = (genres, movie) => {
   return movie.genre_ids.map((id) => {
-    return context.$store.state.genres.find((genre) => genre.id === id).name;
+    return genres.find((genre) => genre.id === id).name;
   });
 }

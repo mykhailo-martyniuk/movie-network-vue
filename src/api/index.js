@@ -22,7 +22,6 @@ export const searchByTitle = async (searchQuery, page) => {
     `search/movie?api_key=${API_KEY}&language=en-US&page=${page}&include_adult=false&query=${searchQuery}`
   );
 
-  console.log('respone', response);
 
   return {
     movies: response.data.results,
@@ -34,7 +33,6 @@ export const fetchGenres = async () => {
   const response = await api.get(
     `genre/movie/list?api_key=${API_KEY}&language=en-US`
   );
-  console.log('fetchGenres', response.data.genres);
   return response.data.genres;
 };
 

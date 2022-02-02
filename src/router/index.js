@@ -1,11 +1,10 @@
 import MoviePage from '../components/MoviePage.vue';
 import MoviesListPage from '../components/MoviesListPage.vue';
-//import VueRouter from 'vue-router';
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import FavoritesPage from '../components/FavoritesPage.vue';
 
 export const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes: [
     {
       path: '/movie/favorites',

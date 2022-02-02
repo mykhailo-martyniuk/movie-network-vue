@@ -6,7 +6,7 @@
     <div class="numbers-container">
       <button
         class="pagination-el"
-        v-bind:class="{
+        :class="{
           'number-active': i === currentPage,
           number: Number.isInteger(i),
         }"
@@ -25,7 +25,7 @@
 
 <script>
 import { conditionForIncrement, paginationArray } from '../helpers';
-import { SET_PAGE_ACTION } from '../store/actions';
+import { SET_PAGE_ACTION } from '../consts/actions';
 
 export default {
   name: 'Pagination',
@@ -49,7 +49,7 @@ export default {
         this.$store.dispatch(SET_PAGE_ACTION, page);
     },
     onClickIncrement(value) {
-      if (conditionForIncrement(this, value))
+      if (conditionForIncrement(this.$store.state, value))
         this.$store.dispatch(
           SET_PAGE_ACTION,
           this.$store.state.currentPage + value
@@ -60,7 +60,6 @@ export default {
 </script>
 
 <style scoped>
-
 .pagination-container {
   display: flex;
   justify-content: center;

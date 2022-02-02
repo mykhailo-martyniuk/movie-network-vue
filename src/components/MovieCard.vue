@@ -1,25 +1,24 @@
 <template>
-  <div class="card">
-    <img :src="'https://image.tmdb.org/t/p/' + 'w500' + imgSrc" alt="" />
-    <!--    <p>{{ title }}</p>-->
+  <div @click="onClickCard" class="card">
+    <img
+      :src="'https://image.tmdb.org/t/p/' + 'w500' + imgSrc"
+      :alt="!imgSrc ? title : 'poster'"
+    />
     <div class="overlay">
       <div class="button-wrap">
-        <button v-on:click="onClickAdd($event)">
-          <span class="material-icons icon">{{
-            isFavorite ? 'favorite' : 'favorite_border'
-          }}</span>
-        </button>
+        <AddToFavoritesButton :id="id"></AddToFavoritesButton>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { isPropertyOfObjectInArray } from '../helpers';
-import { ADD_TO_FAVORITES_HANDLER } from '../store/mutations';
+import { ADD_TO_FAVORITES_HANDLER } from '../consts/mutations';
+import AddToFavoritesButton from './AddToFavoritesButton.vue';
 
 export default {
   name: 'MovieCard',
+  components: { AddToFavoritesButton },
   props: {
     imgSrc: String,
     title: String,
@@ -28,23 +27,14 @@ export default {
   data() {
     return {};
   },
-  computed: {
-    isFavorite() {
-      if (
-        !isPropertyOfObjectInArray(
-          'id',
-          this.id,
-          this.$store.state.favoritesMovies
-        )
-      )
-        return false;
-      return true;
-    },
-  },
+
   methods: {
     onClickAdd(e) {
-      e.preventDefault();
+      e.stopPropagation();
       this.$store.commit(ADD_TO_FAVORITES_HANDLER, this.id);
+    },
+    onClickCard(e) {
+      this.$router.push({ name: 'Movie', params: { movieId: this.id } });
     },
   },
 };
@@ -54,6 +44,7 @@ export default {
 .card {
   position: relative;
 
+  cursor: pointer;
   overflow: hidden;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
@@ -91,13 +82,5 @@ img {
   width: 150px;
   z-index: 2;
 }
-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-.icon {
-  color: var(--orange);
-  font-size: 50px;
-}
+
 </style>

@@ -6,4 +6,4 @@ export const SET_SEARCH_QUERY = 'setSearchQuery';
 export const ADD_TO_FAVORITES_HANDLER = 'addToFavoritesHandler';
 export const SET_FAVORITES_FROM_LS = 'setFavoritesFromLS';
 export const SET_GENRES = 'setGenres';
-//export const REMOVE_FROM_FAVORITES = 'removeFromFavorites'
+export const ADD_TO_MOVIES = 'addToMovies';

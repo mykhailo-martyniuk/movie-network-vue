@@ -3,6 +3,7 @@
 :root {
     --primary-text: #d8e0e8;
     --background: #14181d;
+    --background-second: #303840;
     --grey: #646361;
     --orange: #b66a13;
     --animation: .3s cubic-bezier(.165,.84,.44,1);
@@ -50,7 +51,6 @@ a:not([class]) {
 
 img,
 picture {
-    max-width: 100%;
     display: block;
 }
 
@@ -87,4 +87,18 @@ body {
 .container {
     max-width: 1240px;
     margin:auto;
+}
+
+
+.movie-container {
+    max-width: 1000px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: -20px -20px;
+}
+
+.card {
+    margin: 20px 20px;
+
 }

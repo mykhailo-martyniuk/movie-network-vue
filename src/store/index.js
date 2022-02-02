@@ -1,5 +1,6 @@
 import {
   ADD_TO_FAVORITES_HANDLER,
+  ADD_TO_MOVIES,
   SET_FAVORITES_FROM_LS,
   SET_GENRES,
   SET_IS_SEARCH,
@@ -7,14 +8,20 @@ import {
   SET_PAGE,
   SET_SEARCH_QUERY,
   SET_TOTAL_PAGES,
-} from './mutations';
-import { fetchGenres, fetchPopular, searchByTitle } from '../api';
+} from '../consts/mutations';
 import {
+  fetchGenres,
+  fetchMovieById,
+  fetchPopular,
+  searchByTitle,
+} from '../api';
+import {
+  ADD_TO_MOVIE_ACTION,
   SET_GENRES_ACTION,
   SET_MOVIES_ACTION,
   SET_PAGE_ACTION,
   SET_SEARCH_MOVIES_ACTION,
-} from './actions';
+} from '../consts/actions';
 import Vuex from 'vuex';
 import { findElByProperty, isPropertyOfObjectInArray, LS } from '../helpers';
 import { FAVORITES } from '../consts';
@@ -45,9 +52,11 @@ export const store = new Vuex.Store({
     },
   },
   mutations: {
-    [SET_MOVIES](state, payload) {
-      console.log(payload);
-      state.movies = payload;
+    [SET_MOVIES](state, movies) {
+      state.movies = movies;
+    },
+    [ADD_TO_MOVIES](state, movie) {
+      state.movies = [...state.movies, movie];
     },
     [SET_PAGE](state, page) {
       state.currentPage = page;
@@ -81,9 +90,6 @@ export const store = new Vuex.Store({
     [SET_FAVORITES_FROM_LS](state) {
       state.favoritesMovies = LS(FAVORITES);
     },
-    // [REMOVE_FROM_FAVORITES](state, id) {
-    //   state.favoritesMovies = state.favoritesMovies.filter(el => el.id.toString() !== id);
-    // },
   },
   actions: {
     async [SET_MOVIES_ACTION]({ commit, state }) {
@@ -116,6 +122,10 @@ export const store = new Vuex.Store({
         commit(SET_PAGE, page);
         await dispatch(SET_MOVIES_ACTION);
       }
+    },
+    async [ADD_TO_MOVIE_ACTION]({ dispatch, commit, state }, id) {
+      const data = await fetchMovieById(id);
+      commit(ADD_TO_MOVIES, data);
     },
   },
 });

@@ -4,10 +4,11 @@ import MovieCard from './components/MovieCard.vue';
 import MoviesListPage from './components/MoviesListPage.vue';
 import Pagination from './components/Pagination.vue';
 import Header from './components/Header.vue';
-import { getPopularMovies } from './helpers';
 import FavoritesPage from './components/FavoritesPage.vue';
-import { SET_FAVORITES_FROM_LS, SET_GENRES } from './store/mutations';
-import { SET_GENRES_ACTION } from './store/actions';
+import { SET_FAVORITES_FROM_LS, SET_GENRES } from './consts/mutations';
+import {SET_GENRES_ACTION, SET_MOVIES_ACTION} from './consts/actions';
+import GenreList from './components/GenreList.vue';
+import AddToFavoritesButton from './components/AddToFavoritesButton.vue';
 
 export default {
   components: {
@@ -17,10 +18,12 @@ export default {
     Pagination,
     Header,
     FavoritesPage,
+    GenreList,
+    AddToFavoritesButton
   },
 
   mounted() {
-    getPopularMovies(this);
+    this.$store.dispatch(SET_MOVIES_ACTION);
     this.$store.commit(SET_FAVORITES_FROM_LS);
     this.$store.dispatch(SET_GENRES_ACTION);
   },
